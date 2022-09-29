@@ -1,7 +1,14 @@
 {
   "name": "esptool-js",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
+  },
   "dependencies": {
     "crypto-js": "^4.0.0",
     "xterm": "^4.13.0"
+  },
+  "devDependencies": {
+    "vite": "^3.1.4"
   }
 }

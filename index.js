@@ -1,3 +1,6 @@
+import { Terminal } from 'xterm';
+import CryptoJS from 'crypto-js';
+
 const baudrates = document.getElementById("baudrates");
 const connectButton = document.getElementById("connectButton");
 const disconnectButton = document.getElementById("disconnectButton");

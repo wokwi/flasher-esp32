@@ -12,11 +12,19 @@ Visit https://espressif.github.io/esptool-js/ to see this tool in action.
 
 ```
 npm install
-python3 -m http.server 8008
+npm start
 ```
 
-Then open http://localhost:8008 in Chrome or Edge.
+Then open http://localhost:5173 in Chrome or Edge.
+
+## Creating a production bundle
+
+```
+npm run build
+```
+
+Then serve the contents of `dist/` directory.
 
 ## License
 
-The code in this repository is Copyright (c) 2021 Espressif Systems (Shanghai) Co. Ltd. It is licensed under Apache 2.0 license, as described in [LICENSE](LICENSE) file.
+The code in this repository is Copyright (c) 2021 Espressif Systems (Shanghai) Co. Ltd, (c) 2022 CodeMagic Ltd. It is licensed under Apache 2.0 license, as described in [LICENSE](LICENSE) file.
