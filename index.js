@@ -332,3 +332,57 @@ programButton.onclick = async () => {
 }
 
 addFile.onclick();
+
+// Wokwi integration:
+function addWokwiFile(offset, bytes) {
+  var rowCount = table.rows.length;
+  var row = table.insertRow(rowCount);
+  row.className = "wokwi-file-row";
+
+  //Column 1 - Offset
+  var cell1 = row.insertCell(0);
+  var element1 = document.createElement("input");
+  element1.type = "text";
+  element1.readOnly = true;
+  element1.id = "offset" + rowCount;
+  element1.value = '0x' + offset.toString(16);
+  cell1.appendChild(element1);
+
+  // Column 2 - File selector
+  var cell2 = row.insertCell(1);
+  var element2 = document.createElement("input");
+  element2.type = "text";
+  element2.readOnly = true;
+  element2.id = "selectFile" + rowCount;
+  element2.value = "wokwi-firmware.bin";
+  element2.addEventListener('change', handleFileSelect, false);
+  element2.data = convertUint8ArrayToBinaryString(bytes);
+  cell2.appendChild(element2);
+
+  // Column 3  - Progress
+  var cell3 = row.insertCell(2);
+  cell3.classList.add("progress-cell");
+  cell3.style.display = 'none'
+  cell3.innerHTML = `<progress value="0" max="100"></progress>`;
+
+  // Column 4 - unused
+  row.insertCell(3);
+}
+
+const pipe = new MessageChannel();
+pipe.port1.addEventListener('message', (event) => {
+  const { type, binaries } = event.data;
+  if (type === 'flash') {
+    while (table.rows.length > 1) {
+      table.deleteRow(1);
+    }
+    for (const { offset, data } of binaries) {
+      addWokwiFile(offset, new Uint8Array(data));
+    }
+  }
+});
+if (window.opener) {
+  const build = new URL(location.href).searchParams.get('build');
+  window.opener.postMessage({ type: 'loadBinary', port: pipe.port2, build }, '*', [pipe.port2]);
+  pipe.port1.start();
+}

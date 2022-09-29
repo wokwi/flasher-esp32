@@ -1,0 +1,5 @@
+.wokwi-file-row input:read-only {
+  color: purple;
+  font-weight: bold;
+  border: none;
+}
